@@ -1,10 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import dailyMessages from "./dailyMessages.json" with { type: "json" };
 
-if (process.env.NODE_ENV !== "production") {
-  await import("dotenv/config");
-}
-
 interface DailyMessageConfig {
   guild: string;
   channel: string;
