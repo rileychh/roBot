@@ -3,4 +3,5 @@ node_modules/
 
 # Environment variables and config files
 .env
+install.url
 dailyMessages.json
