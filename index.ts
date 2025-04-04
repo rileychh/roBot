@@ -36,11 +36,14 @@ function scheduleMessage(config: DailyMessageConfig) {
   const timeUntilMessage = targetDate.getTime() - now.getTime();
 
   // Truncate message for logging if it's too long
-  const truncatedMessage = config.message.length > 20 
-    ? config.message.substring(0, 19) + '…' 
-    : config.message;
+  const truncatedMessage =
+    config.message.length > 20
+      ? `${config.message.substring(0, 19)}…`
+      : config.message;
 
-  console.log(`Message scheduled for ${targetDate.toISOString()}: "${truncatedMessage}"`);
+  console.log(
+    `Message scheduled for ${targetDate.toISOString()}: "${truncatedMessage}"`,
+  );
 
   setTimeout(() => {
     sendDailyMessage(config);
@@ -81,7 +84,7 @@ client.on(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}!`);
 
   const messageConfigs = dailyMessages as DailyMessageConfig[];
-  
+
   // Schedule each message separately with its own random time
   for (const config of messageConfigs) {
     scheduleMessage(config);
