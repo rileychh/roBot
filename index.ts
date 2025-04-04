@@ -22,8 +22,8 @@ function scheduleMessage(config: DailyMessageConfig) {
   // Calculate a random time for today (if it's still possible) or tomorrow
   const targetDate = new Date();
 
-  // Random hour between 12 AM and 12 PM
-  const randomHour = Math.floor(Math.random() * 13);
+  // Random hour between 12 PM and 12 AM
+  const randomHour = Math.floor(Math.random() * 12) + 12;
   const randomMinute = Math.floor(Math.random() * 60);
 
   targetDate.setHours(randomHour, randomMinute, 0, 0);
@@ -35,12 +35,12 @@ function scheduleMessage(config: DailyMessageConfig) {
 
   const timeUntilMessage = targetDate.getTime() - now.getTime();
 
-  // Truncate message for logging if it's too long (e.g., over 50 chars)
+  // Truncate message for logging if it's too long
   const truncatedMessage = config.message.length > 20 
     ? config.message.substring(0, 19) + '…' 
     : config.message;
-  
-  console.log(`Message scheduled for ${targetDate.toLocaleString()}: "${truncatedMessage}"`);
+
+  console.log(`Message scheduled for ${targetDate.toISOString()}: "${truncatedMessage}"`);
 
   setTimeout(() => {
     sendDailyMessage(config);
@@ -67,7 +67,7 @@ async function sendDailyMessage(config: DailyMessageConfig) {
 
     await channel.send(config.message);
     console.log(
-      `Daily message sent to ${guild.name}#${channel.name} at ${new Date().toLocaleString()}`,
+      `Daily message sent to ${guild.name}#${channel.name} at ${new Date().toISOString()}`,
     );
   } catch (error) {
     console.error(
