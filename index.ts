@@ -16,7 +16,7 @@ const client = new Client({
   ],
 });
 
-function scheduleRandomDailyMessage() {
+function scheduleMessage(config: DailyMessageConfig) {
   const now = new Date();
 
   // Calculate a random time for today (if it's still possible) or tomorrow
@@ -35,52 +35,57 @@ function scheduleRandomDailyMessage() {
 
   const timeUntilMessage = targetDate.getTime() - now.getTime();
 
-  console.log(`Daily message scheduled for ${targetDate.toLocaleString()}`);
+  // Truncate message for logging if it's too long (e.g., over 50 chars)
+  const truncatedMessage = config.message.length > 20 
+    ? config.message.substring(0, 19) + '…' 
+    : config.message;
+  
+  console.log(`Message scheduled for ${targetDate.toLocaleString()}: "${truncatedMessage}"`);
 
   setTimeout(() => {
-    sendDailyMessages();
+    sendDailyMessage(config);
     // Schedule the next message after this one is sent
-    scheduleRandomDailyMessage();
+    scheduleMessage(config);
   }, timeUntilMessage);
 }
 
-async function sendDailyMessages() {
-  const messageConfigs = dailyMessages as DailyMessageConfig[];
-
-  for (const config of messageConfigs) {
-    try {
-      const guild = client.guilds.cache.get(config.guild);
-      if (!guild) {
-        console.error(`Guild with ID ${config.guild} not found`);
-        continue;
-      }
-
-      const channel = guild.channels.cache.get(config.channel);
-      if (!channel || !channel.isTextBased()) {
-        console.error(
-          `Text channel with ID ${config.channel} not found or is not a text channel`,
-        );
-        continue;
-      }
-
-      await channel.send(config.message);
-      console.log(
-        `Daily message sent to ${guild.name}#${channel.name} at ${new Date().toLocaleString()}`,
-      );
-    } catch (error) {
-      console.error(
-        `Failed to send message to guild ${config.guild}, channel ${config.channel}:`,
-        error,
-      );
+async function sendDailyMessage(config: DailyMessageConfig) {
+  try {
+    const guild = client.guilds.cache.get(config.guild);
+    if (!guild) {
+      console.error(`Guild with ID ${config.guild} not found`);
+      return;
     }
+
+    const channel = guild.channels.cache.get(config.channel);
+    if (!channel || !channel.isTextBased()) {
+      console.error(
+        `Text channel with ID ${config.channel} not found or is not a text channel`,
+      );
+      return;
+    }
+
+    await channel.send(config.message);
+    console.log(
+      `Daily message sent to ${guild.name}#${channel.name} at ${new Date().toLocaleString()}`,
+    );
+  } catch (error) {
+    console.error(
+      `Failed to send message to ${config.guild}#${config.channel}:`,
+      error,
+    );
   }
 }
 
 client.on(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}!`);
 
-  // Start scheduling daily messages once the bot is ready
-  scheduleRandomDailyMessage();
+  const messageConfigs = dailyMessages as DailyMessageConfig[];
+  
+  // Schedule each message separately with its own random time
+  for (const config of messageConfigs) {
+    scheduleMessage(config);
+  }
 });
 
 client.on(Events.MessageCreate, async (message) => {
