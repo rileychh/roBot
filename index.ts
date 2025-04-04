@@ -88,7 +88,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (
     message.author.id !== bno ||
-    !message.content.match(/不是\s*22/) ||
+    !message.content.match(/(?:不是\s*|84)22/) ||
     !message.guild
   )
     return;
