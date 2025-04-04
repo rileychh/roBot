@@ -1,5 +1,6 @@
 # Dependency directories
 node_modules/
 
-# Environment variables
+# Environment variables and config files
 .env
+dailyMessages.json
