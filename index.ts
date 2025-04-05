@@ -1,5 +1,6 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import dailyMessages from "./dailyMessages.json" with { type: "json" };
+import { containsBunny } from "./matcher";
 
 interface DailyMessageConfig {
   guild: string;
@@ -95,10 +96,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (
     message.author.id !== bno ||
-    !message.content
-      .normalize("NFKD")
-      .replace(/[\s\(\)]/g, "")
-      .match(/(?:[不8][是4]|not)(?:一隻|a)?(?:[兔ㄊ2]+|two|bunny|rabbit)/i) ||
+    !containsBunny(message.content) ||
     !message.guild
   )
     return;
