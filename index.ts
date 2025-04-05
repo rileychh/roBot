@@ -7,14 +7,6 @@ interface DailyMessageConfig {
   message: string;
 }
 
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent,
-  ],
-});
-
 function scheduleMessage(config: DailyMessageConfig) {
   const now = new Date();
 
@@ -79,6 +71,24 @@ async function sendDailyMessage(config: DailyMessageConfig) {
   }
 }
 
+function isBunnyMessage(content: string): boolean {
+  return !!content
+    .normalize("NFKD")
+    .replace(/([0-9])\u{FE0F}\u{20E3}/gu, "$1") // Normalize Keycap Digits
+    .replace(/(?:[\s()]|<.*>)/g, "") // Remove spaces, mentions and emojis
+    .match(
+      /(?:[⛔🚫❌🙅]+|[不八8⓼➑][是四4⓸➍]|not)(?:一隻|a)?(?:[兔ㄊ二2⓶➋🐰🐇]+|two|bunny|rabbit)/iu,
+    );
+}
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+
 client.on(Events.ClientReady, (readyClient) => {
   console.log(`Logged in as ${readyClient.user.tag}!`);
 
@@ -95,11 +105,8 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (
     message.author.id !== bno ||
-    !message.content
-      .normalize("NFKD")
-      .replace(/[\s()]/g, "")
-      .match(/(?:[不8⛔🚫❌🙅]+[是4]?|not)(?:一隻|a)?(?:[兔ㄊ2🐰🐇]+|two|bunny|rabbit)/iu) ||
-    !message.guild
+    !message.guild ||
+    !isBunnyMessage(message.content)
   )
     return;
 
