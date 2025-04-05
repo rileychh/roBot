@@ -108,7 +108,9 @@ client.on(Events.MessageCreate, async (message) => {
 
   try {
     await member.timeout(22 * 100, "你是 22！");
-    console.log(`User ${member.user.tag} timed out for 2.2 seconds.`);
+    console.log(
+      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds.`,
+    );
 
     await message.channel.send(
       `你是 22！${member.user.displayName} 被禁言了 2.2 秒。`,
