@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { containsBunny } from "./matcher.ts";
 
 test("containsBunny", () => {
-  const not = ["不是", "84", "8 ⁴", "not", "不　是"];
+  const not = ["不是", "不！是！", "84", "8 ⁴", "not", "不　是"];
   const rabbit = [
     "22",
     "兔子",
@@ -17,6 +17,7 @@ test("containsBunny", () => {
     "rabbit",
     "二二",
     "🐰",
+    "🐇",
   ];
 
   const testcases = new Set<string>();
