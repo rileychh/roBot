@@ -97,8 +97,8 @@ client.on(Events.MessageCreate, async (message) => {
     message.author.id !== bno ||
     !message.content
       .normalize("NFKD")
-      .replace(/[\s\(\)]/g, "")
-      .match(/(?:[不8][是4]|not)(?:一隻|a)?(?:[兔ㄊ2]+|two|bunny|rabbit)/i) ||
+      .replace(/[\s()]/g, "")
+      .match(/(?:[不8⛔🚫❌🙅]+[是4]?|not)(?:一隻|a)?(?:[兔ㄊ2🐰🐇]+|two|bunny|rabbit)/iu) ||
     !message.guild
   )
     return;
