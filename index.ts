@@ -95,7 +95,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   if (
     message.author.id !== bno ||
-    !message.content.match(/(?:不是|84|not)\s*(?:[2兔ㄊ]+|bunny|rabbit)/i) ||
+    !message.content.match(/(?:不是|84|not)\s*(?:[兔ㄊ2²₂２②⑵𝟮𝟐𝟤𝟸]+|two|bunny|rabbit)/iu) ||
     !message.guild
   )
     return;
@@ -104,7 +104,7 @@ client.on(Events.MessageCreate, async (message) => {
   if (!member) return;
 
   try {
-    await member.timeout(22 * 100, "你是 2.2！");
+    await member.timeout(22 * 100, "你是 22！");
     console.log(`User ${member.user.tag} timed out for 2.2 seconds.`);
 
     await message.channel.send(
