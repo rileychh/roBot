@@ -10,6 +10,7 @@ COPY pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 COPY index.ts .
+COPY bunnyDenial.ts .
 
 ENV NODE_ENV=production
 

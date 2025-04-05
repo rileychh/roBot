@@ -10,12 +10,15 @@
   "scripts": {
     "check": "biome check --fix",
     "dev": "node --experimental-strip-types --env-file=.env --watch index.ts",
+    "test": "node --experimental-strip-types --env-file=.env --test *.test.ts",
     "start": "node --experimental-strip-types index.ts"
   },
   "dependencies": {
-    "discord.js": "^14.18.0"
+    "discord.js": "^14.18.0",
+    "emoji-toolkit": "^9.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.14.0"
   }
 }

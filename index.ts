@@ -1,5 +1,5 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
-import { matchPattern } from "./bunnyDenial.ts";
+import { matchPattern, ollama } from "./bunnyDenial.ts";
 import dailyMessages from "./dailyMessages.json" with { type: "json" };
 
 interface DailyMessageConfig {
@@ -94,27 +94,34 @@ client.on(Events.ClientReady, (readyClient) => {
 client.on(Events.MessageCreate, async (message) => {
   const bno = process.env.BNO;
 
-  if (
-    message.author.id !== bno ||
-    !message.guild ||
-    !matchPattern(message.content)
-  )
-    return;
+  if (message.author.id !== bno || !message.guild) return;
+
+  let source: string | null = null;
+
+  if (matchPattern(message.content)) source = "matchPattern";
+  else if (await ollama(message.content)) source = "ollama";
+
+  if (!source) return;
 
   const member = message.guild.members.cache.get(bno);
   if (!member) return;
 
   try {
     await member.timeout(22 * 100, "你是 22！");
-    console.log(
-      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds.`,
-    );
 
-    await message.channel.send(
+    await message.reply(
       `你是 22！${member.user.displayName} 被禁言了 2.2 秒。`,
     );
+
+    console.log(
+      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds. (${source})`,
+    );
   } catch (error) {
-    console.error("Failed to timeout user:", error);
+    await message.reply("你是 22！");
+
+    console.log(
+      `User ${member.user.tag} said "${message.content}". (${source})`,
+    );
   }
 });
 
