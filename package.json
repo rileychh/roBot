@@ -10,7 +10,8 @@
   "scripts": {
     "check": "biome check --fix",
     "dev": "node --experimental-strip-types --env-file=.env --watch index.ts",
-    "start": "node --experimental-strip-types index.ts"
+    "start": "node --experimental-strip-types index.ts",
+    "test": "node --experimental-strip-types --test *.test.ts"
   },
   "dependencies": {
     "discord.js": "^14.18.0"
