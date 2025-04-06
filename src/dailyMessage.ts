@@ -1,5 +1,5 @@
 import type { Client } from "discord.js";
-import dailyMessages from "./dailyMessages.json" with { type: "json" };
+import dailyMessages from "../dailyMessages.json" with { type: "json" };
 
 interface DailyMessageConfig {
   guild: string;

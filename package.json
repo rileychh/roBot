@@ -9,9 +9,9 @@
   "packageManager": "pnpm@10.7.1",
   "scripts": {
     "check": "biome check --fix",
-    "dev": "node --experimental-strip-types --env-file=.env --watch index.ts",
-    "test": "node --experimental-strip-types --env-file=.env --test *.test.ts",
-    "start": "node --experimental-strip-types index.ts"
+    "dev": "node --experimental-strip-types --env-file=.env --watch src/index.ts",
+    "test": "node --experimental-strip-types --env-file=.env --test tests/*.ts",
+    "start": "node --experimental-strip-types src/index.ts"
   },
   "dependencies": {
     "discord.js": "^14.18.0",

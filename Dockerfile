@@ -9,9 +9,7 @@ COPY package.json .
 COPY pnpm-lock.yaml .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
-COPY index.ts .
-COPY bunnyDenial.ts .
-COPY dailyMessage.ts .
+COPY src/ src/
 
 ENV NODE_ENV=production
 

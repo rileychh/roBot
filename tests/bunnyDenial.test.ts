@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { before, test } from "node:test";
-import { matchPattern, ollama } from "./bunnyDenial.ts";
+import { matchPattern, ollama } from "../src/bunnyDenial.ts";
 
 test("matchPattern should correctly identify bunny denial messages", async (t) => {
   const positiveTestCases = [
