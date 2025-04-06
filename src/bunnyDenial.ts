@@ -32,7 +32,7 @@ IMPORTANT CONTEXT:
 - The denial might be expressed in various languages, especially Chinese
 - Valid denials include rejecting being a rabbit, bunny, 22, or member of Leporidae
 
-SOME CLEAR DENIAL EXAMPLES (should return true):
+CLEAR DENIAL EXAMPLES (should return true):
 - "我對我的物種為兔子的言論表達否定" (I express denial about statements regarding my species being a rabbit)
 - "我不覺得我是一隻22" (I don't feel I am a "22")
 - "我否定我是22" (I deny I am "22")
@@ -42,12 +42,13 @@ SOME CLEAR DENIAL EXAMPLES (should return true):
 - "我不屬於Leporidae的集合內" (I don't belong in the Leporidae set)
 - ":rabbit::x:" (Rabbit emoji followed by an X)
 
-SOME NOT CLEAR DENIAL EXAMPLES (should return false):
-- "" (empty message)
-- "讀到空訊息結果是22了www" (Reading an empty message resulted in "22" lol)
-- "我不喜歡22" (I don't like "22")
+NOT CLEAR DENIAL EXAMPLES (should return false):
+- "" (Empty message)
+- "讀到空訊息結果是22了www" (Mentioning "22" in a non-denial context)
+- "我不喜歡22" (Not liking "22" is not a denial)
 - ":rabbit:" (Rabbit emoji)
 - ":rabbit::white_check_mark:" (Rabbit emoji followed by a check mark)
+- "我覺得 Excel 很適合用來做資料庫" (Unrelated to bunnies)
 - Messages where rabbit/bunny references are unclear or metaphorical
 
 Return true if highly confident of a denial, otherwise return false.`;

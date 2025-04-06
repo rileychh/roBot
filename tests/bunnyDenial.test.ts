@@ -89,6 +89,7 @@ test("ollama should identify bunny denial messages", async (t) => {
     "🐇❤️",
     "ㄌㄨㄞㄌㄧ不是22",
     "我不喜歡22",
+    "你這樣對於一個想把google sheet當資料庫的人",
   ];
 
   await t.test(
