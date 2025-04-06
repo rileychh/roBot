@@ -81,7 +81,7 @@ const client = new Client({
 });
 
 client.on(Events.ClientReady, (readyClient) => {
-  console.log(`Logged in as ${readyClient.user.tag}!`);
+  console.log(`Logged in as ${readyClient.user.tag}`);
 
   const messageConfigs = dailyMessages as DailyMessageConfig[];
 
@@ -115,7 +115,7 @@ client.on(Events.MessageCreate, async (message) => {
     });
 
     console.log(
-      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds. (${source})`,
+      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds (${source})`,
     );
   } catch (error) {
     await message.reply({
@@ -124,7 +124,7 @@ client.on(Events.MessageCreate, async (message) => {
     });
 
     console.log(
-      `User ${member.user.tag} said "${message.content}". (${source})`,
+      `User ${member.user.tag} said "${message.content}" (${source})`,
     );
   }
 });
