@@ -1,3 +1,4 @@
+import { type Message, MessageFlags } from "discord.js";
 import emoji from "emoji-toolkit";
 
 export function matchPattern(content: string): boolean {
@@ -88,5 +89,43 @@ Return true if highly confident of a denial, otherwise return false.`;
   } catch (error) {
     console.error("Error calling Ollama API:", error);
     return false;
+  }
+}
+
+export async function handleBunnyDenial(message: Message) {
+  const bno = process.env.BNO;
+
+  if (message.author.id !== bno || !message.guild) return;
+
+  let source: string | null = null;
+
+  if (matchPattern(message.content)) source = "matchPattern";
+  else if (await ollama(message.content)) source = "ollama";
+
+  if (!source) return;
+
+  const member = message.guild.members.cache.get(bno);
+  if (!member) return;
+
+  try {
+    await member.timeout(22 * 100, "你是 22！");
+
+    await message.reply({
+      content: `你是 22！${member.user.displayName} 被禁言了 2.2 秒。`,
+      flags: MessageFlags.SuppressNotifications,
+    });
+
+    console.log(
+      `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds (${source})`,
+    );
+  } catch (error) {
+    await message.reply({
+      content: "你是 22！",
+      flags: MessageFlags.SuppressNotifications,
+    });
+
+    console.log(
+      `User ${member.user.tag} said "${message.content}" (${source})`,
+    );
   }
 }

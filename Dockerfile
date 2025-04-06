@@ -11,6 +11,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 
 COPY index.ts .
 COPY bunnyDenial.ts .
+COPY dailyMessage.ts .
 
 ENV NODE_ENV=production
 
