@@ -1,4 +1,4 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { Client, Events, GatewayIntentBits, MessageFlags } from "discord.js";
 import { matchPattern, ollama } from "./bunnyDenial.ts";
 import dailyMessages from "./dailyMessages.json" with { type: "json" };
 
@@ -109,15 +109,19 @@ client.on(Events.MessageCreate, async (message) => {
   try {
     await member.timeout(22 * 100, "你是 22！");
 
-    await message.reply(
-      `你是 22！${member.user.displayName} 被禁言了 2.2 秒。`,
-    );
+    await message.reply({
+      content: `你是 22！${member.user.displayName} 被禁言了 2.2 秒。`,
+      flags: MessageFlags.SuppressNotifications,
+    });
 
     console.log(
       `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds. (${source})`,
     );
   } catch (error) {
-    await message.reply("你是 22！");
+    await message.reply({
+      content: "你是 22！",
+      flags: MessageFlags.SuppressNotifications,
+    });
 
     console.log(
       `User ${member.user.tag} said "${message.content}". (${source})`,
