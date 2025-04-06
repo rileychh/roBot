@@ -15,7 +15,8 @@
   },
   "dependencies": {
     "discord.js": "^14.18.0",
-    "emoji-toolkit": "^9.0.1"
+    "emoji-toolkit": "^9.0.1",
+    "lowdb": "^7.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

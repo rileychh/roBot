@@ -37,7 +37,7 @@
    BNO=特定使用者的Discord ID
    ```
 
-4. 建立 `dailyMessages.json` 檔案，格式如下：
+4. 建立 `data/dailyMessages.json` 檔案，格式如下：
 
    ```json
    [
@@ -62,6 +62,6 @@ docker buildx build -t robot .
 docker run -d --name robot \
   -e DISCORD_TOKEN=你的_Discord_機器人_Token \
   -e BNO=BNO_的_Discord_ID \
-  -v $(pwd)/dailyMessages.json:/app/dailyMessages.json \
+  -v $(pwd)/data:/app/data \
   robot
 ```

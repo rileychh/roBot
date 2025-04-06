@@ -1,5 +1,7 @@
 import type { Client } from "discord.js";
-import dailyMessages from "../dailyMessages.json" with { type: "json" };
+import type { Low } from "lowdb";
+import { JSONFilePreset } from "lowdb/node";
+import dailyMessages from "../data/dailyMessages.json" with { type: "json" };
 
 interface DailyMessageConfig {
   guild: string;
@@ -7,9 +9,24 @@ interface DailyMessageConfig {
   message: string;
 }
 
-export function initializeDailyMessages(client: Client) {
+interface Database {
+  scheduledMessages: Record<string, string>;
+}
+
+let db: Low<Database>;
+
+// Create a unique ID for each message configuration
+function createMessageId(config: DailyMessageConfig): string {
+  return `${config.guild}-${config.channel}-${config.message.substring(0, 10)}`;
+}
+
+export async function initializeDailyMessages(client: Client) {
+  db = await JSONFilePreset<Database>("data/db.json", {
+    scheduledMessages: {},
+  });
+
   for (const config of dailyMessages as DailyMessageConfig[]) {
-    scheduleMessage(client, config);
+    await scheduleMessage(client, config);
   }
 }
 
@@ -46,34 +63,50 @@ export async function sendDailyMessage(
   }
 }
 
-export function scheduleMessage(client: Client, config: DailyMessageConfig) {
+export async function scheduleMessage(
+  client: Client,
+  config: DailyMessageConfig,
+) {
   const now = new Date();
+  const messageId = createMessageId(config);
 
-  // Calculate a random time for today (if it's still possible) or tomorrow
-  const targetDate = new Date();
+  // Try to find an existing scheduled date in the database
+  await db.read();
+  const existingSchedule = db.data.scheduledMessages[messageId] ?? null;
 
-  // Random hour between 12 PM and 12 AM
-  const randomHour = Math.floor(Math.random() * 12) + 12;
-  const randomMinute = Math.floor(Math.random() * 60);
+  let targetDate = new Date();
 
-  targetDate.setHours(randomHour, randomMinute, 0, 0);
+  if (existingSchedule && new Date(existingSchedule) > now) {
+    // Use the stored date if it's in the future
+    targetDate = new Date(existingSchedule);
 
-  // If the time has already passed today, schedule for tomorrow
-  if (targetDate.getTime() <= now.getTime()) {
-    targetDate.setDate(targetDate.getDate() + 1);
+    console.log(
+      `Message "${messageId}" reusing existing schedule for ${targetDate.toISOString()}`,
+    );
+  } else {
+    // Calculate a new random time
+    // Random hour between 12 PM and 12 AM
+    const randomHour = Math.floor(Math.random() * 12) + 12;
+    const randomMinute = Math.floor(Math.random() * 60);
+
+    targetDate.setHours(randomHour, randomMinute, 0, 0);
+
+    // If the time has already passed today, schedule for tomorrow
+    if (targetDate <= now) {
+      targetDate.setDate(targetDate.getDate() + 1);
+    }
+
+    // Store the new schedule in the database
+    await db.update(({ scheduledMessages }) => {
+      scheduledMessages[messageId] = targetDate.toISOString();
+    });
+
+    console.log(
+      `Message "${messageId}" newly scheduled for ${targetDate.toISOString()}`,
+    );
   }
 
   const timeUntilMessage = targetDate.getTime() - now.getTime();
-
-  // Truncate message for logging if it's too long
-  const truncatedMessage =
-    config.message.length > 20
-      ? `${config.message.substring(0, 19)}…`
-      : config.message;
-
-  console.log(
-    `Message scheduled for ${targetDate.toISOString()}: "${truncatedMessage}"`,
-  );
 
   setTimeout(() => {
     sendDailyMessage(client, config);
