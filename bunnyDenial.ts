@@ -44,6 +44,7 @@ SOME CLEAR DENIAL EXAMPLES (should return true):
 SOME NOT CLEAR DENIAL EXAMPLES (should return false):
 - "" (empty message)
 - "讀到空訊息結果是22了www" (Reading an empty message resulted in "22" lol)
+- "我不喜歡22" (I don't like "22")
 - ":rabbit:" (Rabbit emoji)
 - ":rabbit::white_check_mark:" (Rabbit emoji followed by a check mark)
 - Messages where rabbit/bunny references are unclear or metaphorical
