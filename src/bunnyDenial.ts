@@ -12,6 +12,11 @@ export function matchPattern(content: string): boolean {
 }
 
 export async function ollama(message: string): Promise<boolean> {
+  // Skip Ollama calls if the environment variable is set
+  if (process.env.SKIP_OLLAMA) {
+    return false;
+  }
+
   const normalizedMessage = message
     .normalize("NFKD")
     .replace(/([0-9])\u{FE0F}\u{20E3}/gu, "$1") // Normalize Keycap Digits
