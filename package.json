@@ -23,8 +23,6 @@
     "@types/node": "^22.14.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "@biomejs/biome"
-    ]
+    "onlyBuiltDependencies": ["@biomejs/biome"]
   }
 }
