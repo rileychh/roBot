@@ -91,8 +91,8 @@ export async function scheduleMessage(
 
     targetDate.setHours(randomHour, randomMinute, 0, 0);
 
-    // If the time has already passed today, schedule for tomorrow
-    if (targetDate <= now) {
+    // If the time is in less than 12 hours, schedule for tomorrow
+    if (targetDate.getTime() - now.getTime() < 12 * 60 * 60 * 1000) {
       targetDate.setDate(targetDate.getDate() + 1);
     }
 
