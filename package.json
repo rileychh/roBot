@@ -21,5 +21,10 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.14.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome"
+    ]
   }
 }
