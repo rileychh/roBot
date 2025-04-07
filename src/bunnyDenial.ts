@@ -55,12 +55,12 @@ Return true if highly confident of a denial, otherwise return false.`;
 
   try {
     const response = await fetch(
-      `https://${process.env.OLLAMA_HOST}/api/chat`,
+      `${process.env.OLLAMA_PROTOCOL}://${process.env.OLLAMA_HOST}/api/chat`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "gemma3:4b",
+          model: process.env.OLLAMA_MODEL,
           messages: [
             {
               role: "system",

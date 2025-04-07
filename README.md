@@ -30,12 +30,7 @@
    pnpm install
    ```
 
-3. 建立 `.env` 檔案，加入以下內容：
-
-   ```ini
-   DISCORD_TOKEN=你的Discord機器人Token
-   BNO=特定使用者的Discord ID
-   ```
+3. 根據 `.env.example` 建立 `.env` 檔案。
 
 4. 建立 `data/dailyMessages.json` 檔案，格式如下：
 
@@ -62,6 +57,9 @@ docker buildx build -t robot .
 docker run -d --name robot \
   -e DISCORD_TOKEN=你的_Discord_機器人_Token \
   -e BNO=BNO_的_Discord_ID \
+  -e OLLAMA_PROTOCOL=https \
+  -e OLLAMA_HOST=你的_Ollama_伺服器網址 \
+  -e OLLAMA_MODEL=gemma3:4b \
   -v $(pwd)/data:/app/data \
   robot
 ```
