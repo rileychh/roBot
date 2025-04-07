@@ -49,7 +49,11 @@ export async function sendDailyMessage(
       return;
     }
 
-    await channel.send(config.message);
+    await channel.send({
+      content: config.message,
+      options: { allowedMentions: { parse: [] } },
+    });
+
     console.log(
       `Daily message sent to ${guild.name}#${
         channel.name
