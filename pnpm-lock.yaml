@@ -9,20 +9,20 @@ importers:
   .:
     dependencies:
       discord.js:
-        specifier: ^14.18.0
+        specifier: 14.18.0
         version: 14.18.0
       emoji-toolkit:
-        specifier: ^9.0.1
+        specifier: 9.0.1
         version: 9.0.1
       lowdb:
-        specifier: ^7.0.1
+        specifier: 7.0.1
         version: 7.0.1
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
         version: 1.9.4
       '@types/node':
-        specifier: ^22.14.0
+        specifier: 22.14.0
         version: 22.14.0
 
 packages:

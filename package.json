@@ -14,13 +14,13 @@
     "start": "node --experimental-strip-types src/index.ts"
   },
   "dependencies": {
-    "discord.js": "^14.18.0",
-    "emoji-toolkit": "^9.0.1",
-    "lowdb": "^7.0.1"
+    "discord.js": "14.18.0",
+    "emoji-toolkit": "9.0.1",
+    "lowdb": "7.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/node": "^22.14.0"
+    "@types/node": "22.14.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": ["@biomejs/biome"]
