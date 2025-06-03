@@ -6,6 +6,7 @@ export function matchPattern(content: string): boolean {
     .normalize("NFKD")
     .replace(/([0-9])\u{FE0F}\u{20E3}/gu, "$1") // Normalize Keycap Digits
     .replace(/(?:[\s()]|<.*>)/g, "") // Remove spaces, mentions and emojis
+    .replace(/\p{Mn}/gu, "") // Remove Unicode combining marks properly
     .match(
       /(?:[⛔🚫❌🙅]+|[不八捌8⓼➑][是四肆4⓸➍]|not)(?:一隻|a)?(?:[兔ㄊ二貳2⓶➋🐰🐇]+|two|bunny|rabbit)/iu,
     );
