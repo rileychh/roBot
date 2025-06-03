@@ -12,6 +12,7 @@ test("matchPattern should correctly identify bunny denial messages", async (t) =
     "我 不是 ²²",
     "我 8 ⁴ 22！！！！",
     "8️⃣4️⃣2️⃣2️⃣",
+    "Nöt 22",
   ];
 
   await t.test("should return true for valid bunny patterns", () => {
