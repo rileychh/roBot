@@ -124,7 +124,7 @@ export async function handleBunnyDenial(message: Message) {
     console.log(
       `User ${member.user.tag} said "${message.content}", timed out for 2.2 seconds (${source})`,
     );
-  } catch (error) {
+  } catch (_error) {
     await message.reply({
       content: "你是 22！",
       flags: MessageFlags.SuppressNotifications,
