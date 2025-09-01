@@ -6,7 +6,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.15.0",
   "scripts": {
     "check": "biome check --fix",
     "dev": "node --experimental-strip-types --env-file=.env --watch src/index.ts",
@@ -14,13 +14,13 @@
     "start": "node --experimental-strip-types src/index.ts"
   },
   "dependencies": {
-    "discord.js": "14.21.0",
+    "discord.js": "14.22.1",
     "emoji-toolkit": "9.0.1",
     "lowdb": "7.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.0.6",
-    "@types/node": "22.15.34"
+    "@biomejs/biome": "2.2.2",
+    "@types/node": "22.18.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
