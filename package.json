@@ -6,7 +6,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.18.0",
   "scripts": {
     "check": "biome check --fix",
     "dev": "node --experimental-strip-types --env-file=.env --watch src/index.ts",
@@ -19,8 +19,8 @@
     "lowdb": "7.0.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.2",
-    "@types/node": "22.18.0"
+    "@biomejs/biome": "2.2.5",
+    "@types/node": "22.18.8"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
