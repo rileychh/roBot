@@ -1,7 +1,7 @@
 {
   "name": "ro-b-ot",
   "description": "Ro嗶ot：一隻設計來把嗶諾搞瘋的 Discord 機器人",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "type": "module",
   "engines": {
     "node": ">=22.0.0"
