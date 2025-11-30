@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.3",
-    "@types/node": "22.19.0"
+    "@types/node": "24.10.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
